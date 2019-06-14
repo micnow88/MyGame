@@ -1,0 +1,145 @@
+'use strict';
+
+//zmienne globalne - przyciski
+var paperButton = document.getElementById('paper');
+var stoneButton = document.getElementById('stone');
+var scissorsButton = document.getElementById('scissors');
+var newGameButton = document.getElementById('new-game');
+
+//Pętla dla przycisków
+var buttonLoop = document.getElementsByClassName('player-move');
+
+for (var i=0; i<buttonLoop.length; i++) {
+  buttonLoop[i].addEventListener('click', function(){
+      var buttonAttribute =this.getAttribute("data-move");
+      playerMove(buttonAttribute);   
+});    
+}
+
+//zmienne globalne - output
+var outputScores = document.getElementById('output-scores');
+var outputEnd = document.getElementById('output-end');
+var outputRound = document.getElementById('output-round');
+var outputModal = document.getElementById('output-modal');
+
+//zmienne globalne obiekt
+var params = {
+  roundsCounter: 0,
+  roundsWins: null,
+  userPoint: 0,
+  computerPoint: 0
+};
+
+//Modal
+//Funkcja dla pokazania modala
+var showModal = function(){
+  document.querySelector('#modal-overlay').classList.add('show');
+  if(params.userPoint == params.roundsWins) {
+        document.querySelector('.modal').classList.add('win');
+        outputModal.innerHTML = '<br><br>' + ' YOU WIN ';  
+      }
+      else if(params.computerPoint == params.roundsWins) {
+        document.querySelector('.modal').classList.add('lose');
+        outputModal.innerHTML = '<br><br>' + ' YOU LOSE ';  
+      };
+  };
+
+// funkcja ukrywająca modal
+var hideModal = function(event){
+    event.preventDefault();
+    document.querySelector('#modal-overlay').classList.remove('show');
+  };
+  
+var closeButtons = document.querySelectorAll('.modal .close');
+  
+for(var i = 0; i < closeButtons.length; i++){
+    closeButtons[i].addEventListener('click', hideModal);
+  }
+   
+  
+document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+  
+var modals = document.querySelectorAll('.modal');
+  
+
+  
+for(var i = 0; i < modals.length; i++){
+  modals[i].addEventListener('click', function(event){
+    event.stopPropagation();
+  });
+}
+//funkcja playerMove (losuje ruch komputer, decyduje o punktach, wyświetla wynik rundy oraz dotychczasowy wynik)
+var playerMove = function(type) {
+    params.roundsCounter ++;
+    var getComputerMove = function() {
+      var result = Math.floor(Math.random()*3+1);
+        if (result === 1) {result = 'paper';}
+        else if (result === 2) {result = 'stone';}
+        else if (result === 3) {result = 'scissors';};
+      return result;
+    };
+  
+    var computerMove = getComputerMove();
+    var userType = type;
+  
+    if (userType == computerMove) {
+      outputScores.innerHTML = 'DRAW: you played  ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + '.';}
+    else if (userType ==='paper' && computerMove === 'stone') {
+      outputScores.innerHTML = 'YOU WON: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :)';
+      params.userPoint ++;}
+    else if (userType === 'paper' && computerMove === 'scissors') {
+      outputScores.innerHTML = 'YOU LOSE: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :(';
+      params.computerPoint ++;}
+    else if (userType === 'stone' && computerMove === 'scissors') {
+      outputScores.innerHTML = 'YOU WON: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :)';
+      params.userPoint ++;}
+    else if (userType === 'stone' && computerMove === 'paper') {
+      outputScores.innerHTML = 'YOU LOSE: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :(';
+      params.computerPoint ++;}
+    else if (userType === 'scissors' && computerMove === 'paper') {
+      outputScores.innerHTML = 'YOU WON: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :)';
+      params.userPoint ++;}
+    else if (userType === 'scissors' && computerMove === 'stone') {
+      outputScores.innerHTML = 'YOU LOSE: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :(';
+      params.computerPoint ++;};
+  
+    outputEnd.innerHTML = 'Round: ' + params.roundsCounter + ' : ' + 'User: ' + params.userPoint + ' Computer: ' + params.computerPoint ;
+  
+    if(params.userPoint == params.roundsWins || params.computerPoint == params.roundsWins){
+      showModal();
+      finishGame();
+    };
+};
+
+//funkcja uruchamiająca gre
+var startGame = function() {
+  var buttonShow = document.getElementById('container-button');
+    buttonShow.classList.add('container-button');
+    buttonShow.classList.remove('hide');
+  var buttonHide = document.getElementById('new-game');
+    buttonHide.classList.remove('new-game');
+    buttonHide.classList.add('hide');
+  document.querySelector('.modal').classList.remove('win');
+  document.querySelector('.modal').classList.remove('lose');
+  document.getElementById('output-scores').value = null;
+};
+
+//funkcja zatrzymująca gre
+var finishGame = function() {
+  var buttonHide = document.getElementById('container-button');
+    buttonHide.classList.add('hide');
+  var buttonShow = document.getElementById('new-game');
+    buttonShow.classList.add('new-game');
+    buttonShow.classList.remove('hide');
+  params.roundsCounter = 0;
+  params.userPoint = 0;
+  params.computerPoint = 0;
+}
+
+//własność dla przycisku new-game
+newGameButton.addEventListener('click', function(){
+    params.roundsWins = window.prompt('How many won rounds will the game end?');
+    outputRound.innerHTML = 'Winning ' + params.roundsWins + ' rounds means victory!' ;
+    if (params.roundsWins > 0) {startGame();}
+    else {outputRound.innerHTML = 'Incorrect data';};
+});
