@@ -27,9 +27,10 @@ var params = {
   roundsCounter: 0,
   roundsWins: null,
   userPoint: 0,
-  computerPoint: 0
+  computerPoint: 0,
+  progress: []
 };
-
+var modalTabel = document.getElementById('modal-tabel');
 //Modal
 //Funkcja dla pokazania modala
 var showModal = function(){
@@ -42,7 +43,13 @@ var showModal = function(){
         document.querySelector('.modal').classList.add('lose');
         outputModal.innerHTML = '<br><br>' + ' YOU LOSE ';  
       };
-  };
+  var modalTabel = document.getElementById('modal-tabel');
+  var tabelHeader = modalTabel.createElement('div');
+  modalTabel.appendChild(tabelHeader);
+  for (var i=0; i< progressModal['id'].length; i++) {
+
+  }
+};
 
 // funkcja ukrywająca modal
 var hideModal = function(event){
@@ -56,12 +63,9 @@ for(var i = 0; i < closeButtons.length; i++){
     closeButtons[i].addEventListener('click', hideModal);
   }
    
-  
 document.querySelector('#modal-overlay').addEventListener('click', hideModal);
   
 var modals = document.querySelectorAll('.modal');
-  
-
   
 for(var i = 0; i < modals.length; i++){
   modals[i].addEventListener('click', function(event){
@@ -81,30 +85,53 @@ var playerMove = function(type) {
   
     var computerMove = getComputerMove();
     var userType = type;
+    var roundResult;
   
     if (userType == computerMove) {
-      outputScores.innerHTML = 'DRAW: you played  ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + '.';}
+      outputScores.innerHTML = 'DRAW: you played  ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + '.';
+      roundResult = "Draw";}
     else if (userType ==='paper' && computerMove === 'stone') {
       outputScores.innerHTML = 'YOU WON: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :)';
-      params.userPoint ++;}
+      params.userPoint ++;
+      roundResult = "Win";}
     else if (userType === 'paper' && computerMove === 'scissors') {
       outputScores.innerHTML = 'YOU LOSE: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :(';
-      params.computerPoint ++;}
+      params.computerPoint ++;
+      roundResult = "Lose";}
     else if (userType === 'stone' && computerMove === 'scissors') {
       outputScores.innerHTML = 'YOU WON: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :)';
-      params.userPoint ++;}
+      params.userPoint ++;
+      roundResult = "Win";}
     else if (userType === 'stone' && computerMove === 'paper') {
       outputScores.innerHTML = 'YOU LOSE: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :(';
-      params.computerPoint ++;}
+      params.computerPoint ++;
+      roundResult = "Lose";}
     else if (userType === 'scissors' && computerMove === 'paper') {
       outputScores.innerHTML = 'YOU WON: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :)';
-      params.userPoint ++;}
+      params.userPoint ++;
+      roundResult = "Win";}
     else if (userType === 'scissors' && computerMove === 'stone') {
       outputScores.innerHTML = 'YOU LOSE: you played ' + type.toUpperCase() + ', computer played ' + computerMove.toUpperCase() + ' :(';
-      params.computerPoint ++;};
+      params.computerPoint ++;
+      roundResult = "Lose";};
   
     outputEnd.innerHTML = 'Round: ' + params.roundsCounter + ' : ' + 'User: ' + params.userPoint + ' Computer: ' + params.computerPoint ;
-  
+
+    var progressModal = params.progress;
+    progressModal['id'] = params.roundsCounter;
+    progressModal['playerPlay'] = userType;
+    progressModal['computerPlay'] = computerMove;
+    if (roundResult == "Win") {progressModal['roundResult'] = "You WIN"}
+    else if (roundResult == "Lose") {progressModal['roundResult'] = "You LOSE"}
+    else {progressModal['roundResult'] = "DRAW"};
+    progressModal['score'] = [params.userPoint, params.computerPoint];
+
+    console.log(progressModal['id']);
+    console.log(progressModal['playerPlay']);
+    console.log(progressModal['playerPlay']);
+    console.log(progressModal['roundResult']);
+    console.log(progressModal['score']);
+
     if(params.userPoint == params.roundsWins || params.computerPoint == params.roundsWins){
       showModal();
       finishGame();

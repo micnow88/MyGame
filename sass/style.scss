@@ -67,7 +67,6 @@ button,
   	left: 50%;
   	transform: translate3d(-50%, -50%, 0);
   	border-radius: 6px;
-  	text-transform: uppercase;
 	&.lose {
 		border: 2px solid #ea0e0e;
 		color: #ea0e0e;
@@ -84,6 +83,7 @@ button,
     	justify-content: space-around;
     	align-content: center;
     	align-items: center;
+    	text-transform: uppercase;
 	}
   	.close {
     	position: absolute;
