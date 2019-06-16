@@ -30,9 +30,12 @@ var params = {
   computerPoint: 0,
   progress: []
 };
+var progressModal = params.progress;
 var modalTabel = document.getElementById('modal-tabel');
 //Modal
 //Funkcja dla pokazania modala
+var modalTabel = document.getElementById('modal-tabel');
+
 var showModal = function(){
   document.querySelector('#modal-overlay').classList.add('show');
   if(params.userPoint == params.roundsWins) {
@@ -43,11 +46,34 @@ var showModal = function(){
         document.querySelector('.modal').classList.add('lose');
         outputModal.innerHTML = '<br><br>' + ' YOU LOSE ';  
       };
-  var modalTabel = document.getElementById('modal-tabel');
-  var tabelHeader = modalTabel.createElement('div');
-  modalTabel.appendChild(tabelHeader);
-  for (var i=0; i< progressModal['id'].length; i++) {
 
+//Funkcja dla tablicy
+  
+  var headTabel = ['Rounds', 'Your move', 'Computer move', 'Round result', 'Score'];
+  
+  function createHeadRow(tableData) {
+    var rowHeadContainer = document.createElement('tr')
+    tableData.forEach(function(value) {
+      var column = document.createElement('th');
+      column.innerText = value;
+      rowHeadContainer.appendChild(column);
+    });
+    modalTabel.appendChild(rowHeadContainer);
+  };
+
+  function createRow(tableData) {
+    var rowContainer = document.createElement('tr')
+    tableData.forEach(function(value) {
+      var column = document.createElement('td');
+      column.innerText = tableData;
+      rowContainer.appendChild(column);
+    });
+    modalTabel.appendChild(rowContainer);
+  };
+  createHeadRow(headTabel);
+  for (var i=0; i< progressModal.length; i++) {
+    createRow(progressModal);
+    console.log(progressModal);
   }
 };
 
@@ -55,7 +81,7 @@ var showModal = function(){
 var hideModal = function(event){
     event.preventDefault();
     document.querySelector('#modal-overlay').classList.remove('show');
-  };
+};
   
 var closeButtons = document.querySelectorAll('.modal .close');
   
@@ -117,7 +143,7 @@ var playerMove = function(type) {
   
     outputEnd.innerHTML = 'Round: ' + params.roundsCounter + ' : ' + 'User: ' + params.userPoint + ' Computer: ' + params.computerPoint ;
 
-    var progressModal = params.progress;
+    for (var i=0; i<params.roundsCounter; i++) {
     progressModal['id'] = params.roundsCounter;
     progressModal['playerPlay'] = userType;
     progressModal['computerPlay'] = computerMove;
@@ -125,12 +151,7 @@ var playerMove = function(type) {
     else if (roundResult == "Lose") {progressModal['roundResult'] = "You LOSE"}
     else {progressModal['roundResult'] = "DRAW"};
     progressModal['score'] = [params.userPoint, params.computerPoint];
-
-    console.log(progressModal['id']);
-    console.log(progressModal['playerPlay']);
-    console.log(progressModal['playerPlay']);
-    console.log(progressModal['roundResult']);
-    console.log(progressModal['score']);
+    }
 
     if(params.userPoint == params.roundsWins || params.computerPoint == params.roundsWins){
       showModal();
@@ -151,6 +172,11 @@ var startGame = function() {
   document.getElementById('output-scores').value = null;
 };
 
+//funkcja usuwająca tabele
+var removeTabel = function() {
+  var row = modalTabel.getElementsByTagName('tr');
+  modalTabel.parentNode.removeChild(row);
+};
 //funkcja zatrzymująca gre
 var finishGame = function() {
   var buttonHide = document.getElementById('container-button');
@@ -161,6 +187,7 @@ var finishGame = function() {
   params.roundsCounter = 0;
   params.userPoint = 0;
   params.computerPoint = 0;
+  removeTabel();
 }
 
 //własność dla przycisku new-game
