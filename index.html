@@ -9,21 +9,21 @@
 
 <body>
   <div class='header'>
-  <h1>Lets play!</h1>
-  <h4>Choose a button</h4>
-  <div id="output-round"></div>
-</div>
-<div class='container-button' id='container-button'>
-  <div class='btn'>
-    <button id='paper' data-move="paper" class="player-move">paper</button>
+    <h1>Lets play!</h1>
+    <h4>Choose a button</h4>
+    <div id="output-round"></div>
   </div>
-  <div class='btn'>
-    <button id='stone' data-move="stone" class="player-move">stone</button>
+  <div class='container-button' id='container-button'>
+    <div class='btn'>
+      <button id='paper' data-move="paper" class="player-move">paper</button>
+    </div>
+    <div class='btn'>
+      <button id='stone' data-move="stone" class="player-move">stone</button>
+    </div>
+    <div class='btn'>
+      <button id='scissors' data-move="scissors" class="player-move">scissors</button>
+    </div>
   </div>
-  <div class='btn'>
-    <button id='scissors' data-move="scissors" class="player-move">scissors</button>
-  </div>
-</div>
 <br>
 <div id='output-end'></div>
 <br>
@@ -41,6 +41,7 @@
       <header>Game Result</header>
       <div class="content">
         <div id="output-modal"></div>
+        <br>
         <table id="modal-tabel"></table>
       </div>
     </div>

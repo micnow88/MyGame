@@ -32,10 +32,9 @@ var params = {
 };
 var progressModal = params.progress;
 var modalTabel = document.getElementById('modal-tabel');
-//Modal
-//Funkcja dla pokazania modala
-var modalTabel = document.getElementById('modal-tabel');
 
+//Modal
+//Funkcja wyświetlająca modal
 var showModal = function(){
   document.querySelector('#modal-overlay').classList.add('show');
   if(params.userPoint == params.roundsWins) {
@@ -47,8 +46,7 @@ var showModal = function(){
         outputModal.innerHTML = '<br><br>' + ' YOU LOSE ';  
       };
 
-//Funkcja dla tablicy
-  
+  //Funkcja dla tablicy
   var headTabel = ['Rounds', 'Your move', 'Computer move', 'Round result', 'Score'];
   
   function createHeadRow(tableData) {
@@ -61,26 +59,32 @@ var showModal = function(){
     modalTabel.appendChild(rowHeadContainer);
   };
 
+  
   function createRow(tableData) {
     var rowContainer = document.createElement('tr')
     tableData.forEach(function(value) {
       var column = document.createElement('td');
-      column.innerText = tableData;
+      column.innerText = value;
       rowContainer.appendChild(column);
     });
     modalTabel.appendChild(rowContainer);
   };
+
   createHeadRow(headTabel);
-  for (var i=0; i< progressModal.length; i++) {
-    createRow(progressModal);
-    console.log(progressModal);
+  for (var i=0; i<progressModal.length; i++) {
+    var dataObject = [progressModal[i].id, progressModal[i].playerPlay, progressModal[i].computerPlay, progressModal[i].roundResult, progressModal[i].score];
+    createRow(dataObject);
   }
 };
-
-// funkcja ukrywająca modal
+//funkcja usuwająca tabele
+var removeTabel = function() {
+    modalTabel.parentNode.removeChild(modalTabel);
+};
+// Funkcja ukrywająca modal
 var hideModal = function(event){
     event.preventDefault();
     document.querySelector('#modal-overlay').classList.remove('show');
+    removeTabel();
 };
   
 var closeButtons = document.querySelectorAll('.modal .close');
@@ -98,6 +102,7 @@ for(var i = 0; i < modals.length; i++){
     event.stopPropagation();
   });
 }
+
 //funkcja playerMove (losuje ruch komputer, decyduje o punktach, wyświetla wynik rundy oraz dotychczasowy wynik)
 var playerMove = function(type) {
     params.roundsCounter ++;
@@ -143,16 +148,19 @@ var playerMove = function(type) {
   
     outputEnd.innerHTML = 'Round: ' + params.roundsCounter + ' : ' + 'User: ' + params.userPoint + ' Computer: ' + params.computerPoint ;
 
-    for (var i=0; i<params.roundsCounter; i++) {
-    progressModal['id'] = params.roundsCounter;
-    progressModal['playerPlay'] = userType;
-    progressModal['computerPlay'] = computerMove;
-    if (roundResult == "Win") {progressModal['roundResult'] = "You WIN"}
-    else if (roundResult == "Lose") {progressModal['roundResult'] = "You LOSE"}
-    else {progressModal['roundResult'] = "DRAW"};
-    progressModal['score'] = [params.userPoint, params.computerPoint];
-    }
+    var tabelRoundResult;
+    if (roundResult == "Win") {tabelRoundResult = "You WIN"}
+      else if (roundResult == "Lose") {tabelRoundResult = "You LOSE"}
+      else {tabelRoundResult = "DRAW"};
 
+    progressModal.push({
+      id: params.roundsCounter,
+      playerPlay: userType,
+      computerPlay: computerMove,
+      roundResult: tabelRoundResult,
+      score: [params.userPoint, params.computerPoint]
+    })
+    console.log(progressModal);
     if(params.userPoint == params.roundsWins || params.computerPoint == params.roundsWins){
       showModal();
       finishGame();
@@ -172,11 +180,6 @@ var startGame = function() {
   document.getElementById('output-scores').value = null;
 };
 
-//funkcja usuwająca tabele
-var removeTabel = function() {
-  var row = modalTabel.getElementsByTagName('tr');
-  modalTabel.parentNode.removeChild(row);
-};
 //funkcja zatrzymująca gre
 var finishGame = function() {
   var buttonHide = document.getElementById('container-button');
@@ -187,7 +190,6 @@ var finishGame = function() {
   params.roundsCounter = 0;
   params.userPoint = 0;
   params.computerPoint = 0;
-  removeTabel();
 }
 
 //własność dla przycisku new-game
