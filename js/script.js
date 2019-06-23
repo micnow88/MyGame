@@ -72,13 +72,19 @@ var showModal = function(){
 
   createHeadRow(headTabel);
   for (var i=0; i<progressModal.length; i++) {
-    var dataObject = [progressModal[i].id, progressModal[i].playerPlay, progressModal[i].computerPlay, progressModal[i].roundResult, progressModal[i].score];
-    createRow(dataObject);
+    createRow([
+      progressModal[i].id, 
+      progressModal[i].playerPlay, 
+      progressModal[i].computerPlay, 
+      progressModal[i].roundResult, 
+      progressModal[i].score
+      ]);
   }
 };
 //funkcja usuwająca tabele
 var removeTabel = function() {
-    modalTabel.parentNode.removeChild(modalTabel);
+    modalTabel.innerHTML = '';
+    progressModal = [];
 };
 // Funkcja ukrywająca modal
 var hideModal = function(event){
