@@ -1,134 +1,31 @@
-body {
-  padding: 10px;
-  text-align: center;
-}
+body { padding: 10px; text-align: center; }
 
-body .container-button {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
-}
+body .container-button { display: -ms-flexbox; display: flex; -ms-flex-direction: row; flex-direction: row; -ms-flex-wrap: wrap; flex-wrap: wrap; -ms-flex-pack: center; justify-content: center; -ms-flex-line-pack: center; align-content: center; }
 
-body .container-button .btn {
-  margin: 20px;
-}
+body .container-button .btn { margin: 20px; }
 
-body .container-button.hide {
-  display: none;
-}
+body .container-button.hide { display: none; }
 
-body .container-button.show {
-  display: inline-block;
-}
+body .container-button.show { display: inline-block; }
 
-body button,
-body .new-game {
-  display: inline-block;
-  padding: 11px 50px;
-  max-width: 100%;
-  text-transform: uppercase;
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  color: #fff;
-  background-color: #02ac46;
-  border: 2px solid #02ac46;
-  border-radius: 4px;
-  transition: color .3s, background-color .3s;
-  cursor: pointer;
-  outline: 0 !important;
-  text-decoration: none;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
+body button, body .new-game { display: inline-block; padding: 11px 50px; max-width: 100%; text-transform: uppercase; font-size: 16px; font-weight: 600; text-align: center; white-space: nowrap; vertical-align: middle; color: #fff; background-color: #02ac46; border: 2px solid #02ac46; border-radius: 4px; transition: color .3s, background-color .3s; cursor: pointer; outline: 0 !important; text-decoration: none; -ms-touch-action: manipulation; touch-action: manipulation; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 
-body button:hover, body button:active,
-body .new-game:hover,
-body .new-game:active {
-  color: #02ac46;
-  background-color: #fff;
-}
+body button:hover, body button:active, body .new-game:hover, body .new-game:active { color: #02ac46; background-color: #fff; }
 
-body .overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-}
+body .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); }
 
-body .overlay.show {
-  display: block;
-}
+body .overlay.show { display: block; }
 
-body .overlay .modal {
-  background: #fff;
-  width: 400px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  border-radius: 6px;
-}
+body .overlay .modal { background: #fff; width: 400px; position: absolute; top: 50%; left: 50%; transform: translate3d(-50%, -50%, 0); border-radius: 6px; }
 
-body .overlay .modal.lose {
-  border: 2px solid #ea0e0e;
-  color: #ea0e0e;
-}
+body .overlay .modal.lose { border: 2px solid #ea0e0e; color: #ea0e0e; }
 
-body .overlay .modal.win {
-  border: 2px solid #02ac46;
-  color: #02ac46;
-}
+body .overlay .modal.win { border: 2px solid #02ac46; color: #02ac46; }
 
-body .overlay .modal .flex-container {
-  padding: 20px;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -ms-flex-align: center;
-      align-items: center;
-  text-transform: uppercase;
-}
+body .overlay .modal .flex-container { padding: 20px; display: -ms-flexbox; display: flex; -ms-flex-direction: column; flex-direction: column; -ms-flex-wrap: nowrap; flex-wrap: nowrap; -ms-flex-pack: distribute; justify-content: space-around; -ms-flex-line-pack: center; align-content: center; -ms-flex-align: center; align-items: center; text-transform: uppercase; }
 
-body .overlay .modal .flex-container .content table {
-  border-collapse: collapse;
-}
+body .overlay .modal .flex-container .content table { border-collapse: collapse; }
 
-body .overlay .modal .flex-container .content table table,
-body .overlay .modal .flex-container .content table th,
-body .overlay .modal .flex-container .content table td {
-  border: 1px solid;
-}
+body .overlay .modal .flex-container .content table table, body .overlay .modal .flex-container .content table th, body .overlay .modal .flex-container .content table td { border: 1px solid; }
 
-body .overlay .modal .close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 5px;
-  color: #000;
-  text-decoration: none;
-}
-/*# sourceMappingURL=style.css.map */
+body .overlay .modal .close { position: absolute; right: 0; top: 0; padding: 5px; color: #000; text-decoration: none; }

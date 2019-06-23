@@ -11,10 +11,9 @@ var buttonLoop = document.getElementsByClassName('player-move');
 
 for (var i=0; i<buttonLoop.length; i++) {
   buttonLoop[i].addEventListener('click', function(){
-      var buttonAttribute =this.getAttribute("data-move");
-      playerMove(buttonAttribute);   
-});    
-}
+    var buttonAttribute =this.getAttribute("data-move");
+    playerMove(buttonAttribute);   
+});}
 
 //zmienne globalne - output
 var outputScores = document.getElementById('output-scores');
@@ -30,6 +29,7 @@ var params = {
   computerPoint: 0,
   progress: []
 };
+
 var progressModal = params.progress;
 var modalTabel = document.getElementById('modal-tabel');
 
@@ -37,20 +37,22 @@ var modalTabel = document.getElementById('modal-tabel');
 //Funkcja wyświetlająca modal
 var showModal = function(){
   document.querySelector('#modal-overlay').classList.add('show');
+  
+  //Funkcja dla output-modal
   if(params.userPoint == params.roundsWins) {
-        document.querySelector('.modal').classList.add('win');
-        outputModal.innerHTML = '<br><br>' + ' YOU WIN ';  
-      }
-      else if(params.computerPoint == params.roundsWins) {
-        document.querySelector('.modal').classList.add('lose');
-        outputModal.innerHTML = '<br><br>' + ' YOU LOSE ';  
-      };
+    document.querySelector('.modal').classList.add('win');
+    outputModal.innerHTML = '<br><br>' + ' YOU WIN ';  
+  }
+  else if(params.computerPoint == params.roundsWins) {
+    document.querySelector('.modal').classList.add('lose');
+    outputModal.innerHTML = '<br><br>' + ' YOU LOSE ';  
+  };
 
-  //Funkcja dla tablicy
+  //Funkcja dla modal-tabel
   var headTabel = ['Rounds', 'Your move', 'Computer move', 'Round result', 'Score'];
   
   function createHeadRow(tableData) {
-    var rowHeadContainer = document.createElement('tr')
+    var rowHeadContainer = document.createElement('tr');
     tableData.forEach(function(value) {
       var column = document.createElement('th');
       column.innerText = value;
@@ -59,9 +61,8 @@ var showModal = function(){
     modalTabel.appendChild(rowHeadContainer);
   };
 
-  
   function createRow(tableData) {
-    var rowContainer = document.createElement('tr')
+    var rowContainer = document.createElement('tr');
     tableData.forEach(function(value) {
       var column = document.createElement('td');
       column.innerText = value;
@@ -81,6 +82,7 @@ var showModal = function(){
       ]);
   }
 };
+
 //funkcja usuwająca tabele
 var removeTabel = function() {
     modalTabel.innerHTML = '';
@@ -92,17 +94,21 @@ var hideModal = function(event){
     document.querySelector('#modal-overlay').classList.remove('show');
     removeTabel();
 };
-  
+
+
+//Przypisanie przycisku i overlay dla f. hideModal  
 var closeButtons = document.querySelectorAll('.modal .close');
   
 for(var i = 0; i < closeButtons.length; i++){
-    closeButtons[i].addEventListener('click', hideModal);
-  }
+	closeButtons[i].addEventListener('click', hideModal);
+}
    
 document.querySelector('#modal-overlay').addEventListener('click', hideModal);
-  
+
+
+//Srop Propagation  
 var modals = document.querySelectorAll('.modal');
-  
+
 for(var i = 0; i < modals.length; i++){
   modals[i].addEventListener('click', function(event){
     event.stopPropagation();
@@ -165,7 +171,8 @@ var playerMove = function(type) {
       computerPlay: computerMove,
       roundResult: tabelRoundResult,
       score: [params.userPoint, params.computerPoint]
-    })
+    });
+
     console.log(progressModal);
     if(params.userPoint == params.roundsWins || params.computerPoint == params.roundsWins){
       showModal();
@@ -176,11 +183,13 @@ var playerMove = function(type) {
 //funkcja uruchamiająca gre
 var startGame = function() {
   var buttonShow = document.getElementById('container-button');
-    buttonShow.classList.add('container-button');
-    buttonShow.classList.remove('hide');
+  buttonShow.classList.add('container-button');
+  buttonShow.classList.remove('hide');
+  
   var buttonHide = document.getElementById('new-game');
-    buttonHide.classList.remove('new-game');
-    buttonHide.classList.add('hide');
+  buttonHide.classList.remove('new-game');
+  buttonHide.classList.add('hide');
+  
   document.querySelector('.modal').classList.remove('win');
   document.querySelector('.modal').classList.remove('lose');
   document.getElementById('output-scores').value = null;
@@ -189,14 +198,16 @@ var startGame = function() {
 //funkcja zatrzymująca gre
 var finishGame = function() {
   var buttonHide = document.getElementById('container-button');
-    buttonHide.classList.add('hide');
+  buttonHide.classList.add('hide');
+  
   var buttonShow = document.getElementById('new-game');
-    buttonShow.classList.add('new-game');
-    buttonShow.classList.remove('hide');
+  buttonShow.classList.add('new-game');
+  buttonShow.classList.remove('hide');
+  
   params.roundsCounter = 0;
   params.userPoint = 0;
   params.computerPoint = 0;
-}
+};
 
 //własność dla przycisku new-game
 newGameButton.addEventListener('click', function(){
